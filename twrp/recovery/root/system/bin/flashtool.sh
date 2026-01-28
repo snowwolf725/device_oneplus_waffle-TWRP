@@ -45,6 +45,58 @@ get_slot(){
   echo $SLOT
 }
 
+choose() {
+  #note from chainfire @xda-developers: getevent behaves weird when piped, and busybox grep likes that even less than toolbox/toybox grep
+  while true; do
+    /system/bin/getevent -lc 1 2>&1 | /system/bin/grep VOLUME | /system/bin/grep " DOWN" > $INSTALLER/events
+    if (`cat $INSTALLER/events 2>/dev/null | /system/bin/grep VOLUME >/dev/null`); then
+      break
+    fi
+  done
+  if (`cat $INSTALLER/events 2>/dev/null | /system/bin/grep VOLUMEUP >/dev/null`); then
+    return 0
+  else
+    return 1
+  fi
+}
+
+check() {
+    local device_img="$1"
+    local new_img="$2"
+    
+    device_arb=$(./arbscan "$device_img" | grep ARB)
+    new_arb=$(./arbscan "$new_img" | grep ARB)
+    
+    if [ "$device_arb" == "$new_arb" ]; then
+        ui_print "Device $device_arb"
+        ui_print "New    $new_arb"
+        ui_print "ARB Index match"
+    else
+        ui_print "Device $device_arb"
+        ui_print "New    $new_arb"
+        ui_print "ARB Index not match"
+        ui_print ""
+        ui_print "Please select an option"
+        ui_print "Volume Up) Install OTA without updating xbl and related partitions"
+        ui_print "Volume Down) Force installation"
+        
+        if choose; then
+          ui_print "press up"
+          rm $tmpdir/payload/abl.img
+          rm $tmpdir/payload/xbl.img
+          rm $tmpdir/payload/xbl_config.img
+          rm $tmpdir/payload/xbl_ramdump.img
+          mv $tmpdir/payload/xbl_config.old $tmpdir/payload/xbl_config.img
+          cat /dev/block/by-name/xbl_ramdump$slot > $tmpdir/payload/xbl_ramdump.img
+          cat /dev/block/by-name/xbl$slot > $tmpdir/payload/xbl.img
+          cat /dev/block/by-name/abl$slot > $tmpdir/payload/abl.img
+        else
+          ui_print "press down"
+        fi
+        
+    fi
+}
+
 ##make super partition
 mksuper(){
   Imgdir=$1
@@ -192,6 +244,10 @@ if [ -s $tmpdir/payload/recovery.img ]
 then
    rm $tmpdir/payload/recovery.img
 fi
+
+##check ARB
+cat /dev/block/by-name/xbl_config$slot > $tmpdir/payload/xbl_config.old
+check "$tmpdir/payload/xbl_config.old" "$tmpdir/payload/xbl_config.img"
 
 show_progress 0.1 10;
 
