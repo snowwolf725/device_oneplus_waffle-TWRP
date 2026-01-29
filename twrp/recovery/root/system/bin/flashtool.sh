@@ -64,8 +64,8 @@ check() {
     local device_img="$1"
     local new_img="$2"
     
-    device_arb=$(./arbscan "$device_img" | grep ARB)
-    new_arb=$(./arbscan "$new_img" | grep ARB)
+    device_arb=$(arbscan "$device_img" | grep ARB)
+    new_arb=$(arbscan "$new_img" | grep ARB)
     
     if [ "$device_arb" == "$new_arb" ]; then
         ui_print "Device $device_arb"
@@ -146,7 +146,7 @@ ui_print " "
 ui_print "=================================="
 ui_print " " 
 ui_print ""
-ui_print "          FlashTool V3.7          "
+ui_print "          FlashTool V3.8          "
 ui_print " " 
 ui_print ""
 ui_print "=================================="
