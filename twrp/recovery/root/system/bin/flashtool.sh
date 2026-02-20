@@ -146,7 +146,7 @@ ui_print " "
 ui_print "=================================="
 ui_print " " 
 ui_print ""
-ui_print "          FlashTool V3.8          "
+ui_print "          FlashTool V3.9          "
 ui_print " " 
 ui_print ""
 ui_print "=================================="
@@ -210,7 +210,7 @@ if [ ! -s $tmpdir/payload/my_company.img ]
 then
   ui_print "Pick-up missed partition (my_company)"
   ##pickup image from device 
-  cat /dev/block/mapper/my_company$slot > $tmpdir/payload/my_company.img
+  cp /system/payload/my_company.img $tmpdir/payload/my_company.img
   [ ! -s $tmpdir/payload/my_company.img ] && abort "my_company.img is not found"
 fi
 
@@ -219,7 +219,7 @@ if [ ! -s $tmpdir/payload/my_preload.img ]
 then
   ui_print "Pick-up missed partition (my_preload)"
   ##pickup image from device 
-  cat /dev/block/mapper/my_preload$slot > $tmpdir/payload/my_preload.img
+  cp /system/payload/my_preload.img $tmpdir/payload/my_preload.img
   [ ! -s $tmpdir/payload/my_preload.img ] && abort "my_preload.img not found"
 fi
 
