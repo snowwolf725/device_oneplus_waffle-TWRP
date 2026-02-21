@@ -190,22 +190,24 @@ rm -rf $tmpdir/payload.bin
 show_progress 0.1 10;
 
 ##Check version 
-unzip -o "$package" "payload_properties.txt" -d $tmpdir/
-if grep -q "PJD110" "$tmpdir/payload_properties.txt"; then
-    version="CN"
-elif grep -q "CPH2573" "$tmpdir/payload_properties.txt"; then
-    version="IN"
-elif grep -q "CPH2581" "$tmpdir/payload_properties.txt"; then
-    version="EU"
-elif grep -q "CPH2583" "$tmpdir/payload_properties.txt"; then
-    version="NA"
+unzip -o "$package" "META-INF/com/android/metadata" -d $tmpdir/
+version=$(cat $tmpdir/metadata |grep version_name_show|cut -d'=' -f2)
+product_name=$(cat $tmpdir/metadata |grep product_name|cut -d'=' -f2)
+if [ "$product_name" = "PJD110" ]; then
+    ui_print "Version:$version (CN)"
+elif [ "$product_name" = "CPH2573" ]; then
+    ui_print "Version:$version (IN)"
+elif [ "$product_name" = "CPH2581EEA" ]; then
+    ui_print "Version:$version (EU)"
+elif [ "$product_name" = "CPH2581" ]; then
+    ui_print "Version:$version (GLO)"
+elif [ "$product_name" = "CPH2583" ]; then
+    ui_print "Version:$version (NA)"
 else
     ui_print "Unknown Version"
-    version="UN"
 fi
 
 ##pickup missing partition 
-#unzip -j -o "$ZIPFILE" "bin/$version/my_company.img" -d $tmpdir/payload/
 if [ ! -s $tmpdir/payload/my_company.img ] 
 then
   ui_print "Pick-up missed partition (my_company)"
@@ -214,7 +216,6 @@ then
   [ ! -s $tmpdir/payload/my_company.img ] && abort "my_company.img is not found"
 fi
 
-#unzip -j -o "$ZIPFILE" "bin/$version/my_preload.img" -d $tmpdir/payload/
 if [ ! -s $tmpdir/payload/my_preload.img ] 
 then
   ui_print "Pick-up missed partition (my_preload)"
