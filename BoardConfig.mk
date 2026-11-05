@@ -75,10 +75,12 @@ BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
 BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 17175674880
 BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext product vendor vendor_dlkm odm
 
-BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
-TARGET_COPY_OUT_ODM             := odm
-TARGET_COPY_OUT_VENDOR          := vendor
-TARGET_COPY_OUT_VENDOR_DLKM     := vendor_dlkm
+BOARD_ODMIMAGE_FILE_SYSTEM_TYPE         := ext4
+TARGET_COPY_OUT_ODM                     := odm
+TARGET_COPY_OUT_VENDOR                  := vendor
+TARGET_COPY_OUT_VENDOR_DLKM             := vendor_dlkm
+BOARD_USES_VENDOR_DLKMIMAGE             := true
+BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # Platform
 # Define hardware platform
