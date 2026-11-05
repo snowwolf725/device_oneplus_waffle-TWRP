@@ -10,7 +10,8 @@ BUILD_BROKEN_DUP_RULES                          := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES    := true
 
 BUILD_BROKEN_NINJA_USES_ENV_VARS    += RTIC_MPGEN
-BUILD_BROKEN_PLUGIN_VALIDATION      := soong-libaosprecovery_defaults soong-libguitwrp_defaults soong-libminuitwrp_defaults soong-vold_defaults
+BUILD_BROKEN_NINJA_USES_ENV_VARS    += SDCLANG_AE_CONFIG SDCLANG_CONFIG SDCLANG_SA_ENABLE
+#BUILD_BROKEN_PLUGIN_VALIDATION      := soong-libaosprecovery_defaults soong-libguitwrp_defaults soong-libminuitwrp_defaults soong-vold_defaults
 
 # Architecture
 TARGET_ARCH                 := arm64
@@ -25,37 +26,30 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a75
 
 # A/B
-AB_OTA_PARTITIONS := \
-    boot \
-    init_boot \
-    vendor_boot \
-    dtbo \
-    odm \
-    product \
-    system \
-    system_ext \
-    system_dlkm \
-    vbmeta \
-    vbmeta_system \
-    vbmeta_vendor \
-    vendor \
-    vendor_dlkm
-
-# Bootloader
-PRODUCT_PLATFORM                := pineapple
-TARGET_BOOTLOADER_BOARD_NAME    := pineapple
+AB_OTA_PARTITIONS += boot init_boot vendor_boot recovery dtbo \
+    abl aop aop_config bluetooth cpucp cpucp_dtb devcfg dsp \
+    engineering_cdt featenabler hyp imagefv keymaster modem \
+    oplusstanvbk qupfw shrm splash tz uefi uefisecapp \
+    xbl xbl_config xbl_ramdump \
+    vbmeta vbmeta_system vbmeta_vendor \
+    system system_ext system_dlkm product vendor vendor_dlkm \
+    my_bigball my_carrier my_company my_engineering my_heytap \
+    my_manifest my_preload my_product my_region my_stock odm 
 
 # Crypto
 BOARD_USES_METADATA_PARTITION   := true
 TW_INCLUDE_CRYPTO               := true
 
 # Debug
+#TWRP_EVENT_LOGGING := true
 TARGET_USES_LOGD                := true
 TWRP_INCLUDE_LOGCAT             := true
 TARGET_RECOVERY_DEVICE_MODULES  += debuggerd
 TARGET_RECOVERY_DEVICE_MODULES  += strace
+#TARGET_RECOVERY_DEVICE_MODULES += twrpdec
 RECOVERY_BINARY_SOURCE_FILES    += $(TARGET_OUT_EXECUTABLES)/debuggerd
 RECOVERY_BINARY_SOURCE_FILES    += $(TARGET_OUT_EXECUTABLES)/strace
+#RECOVERY_BINARY_SOURCE_FILES   += $(TARGET_RECOVERY_ROOT_OUT)/sbin/twrpdec
 
 # File systems
 TARGET_USERIMAGES_USE_F2FS := true
@@ -84,10 +78,14 @@ BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext product vendor 
 BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_ODM             := odm
 TARGET_COPY_OUT_VENDOR          := vendor
+TARGET_COPY_OUT_VENDOR_DLKM     := vendor_dlkm
 
 # Platform
-TARGET_BOARD_PLATFORM   := pineapple
-QCOM_BOARD_PLATFORMS    += pineapple
+# Define hardware platform
+PRODUCT_PLATFORM             := pineapple
+QCOM_BOARD_PLATFORMS         += $(PRODUCT_PLATFORM)
+TARGET_BOARD_PLATFORM        := $(PRODUCT_PLATFORM)
+TARGET_BOOTLOADER_BOARD_NAME := $(TARGET_BOARD_PLATFORM)
 
 # Recovery
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE    := true
@@ -122,13 +120,13 @@ TW_THEME                      := landscape_hdpi #portrait_hdpi
 #RECOVERY_TOUCHSCREEN_FLIP_Y  := true 
 
 # TWRP file system
-RECOVERY_SDCARD_ON_DATA     := true
-TARGET_USES_MKE2FS          := true
-TW_ENABLE_FS_COMPRESSION    := true
-TW_INCLUDE_FUSE_EXFAT       := true
-TW_INCLUDE_FUSE_NTFS        := true
-TW_INCLUDE_NTFS_3G          := true
-TW_NO_EXFAT_FUSE            := true
+RECOVERY_SDCARD_ON_DATA      := true
+TARGET_USES_MKE2FS           := true
+#TW_ENABLE_FS_COMPRESSION    := true
+#TW_INCLUDE_FUSE_EXFAT       := true
+#TW_INCLUDE_FUSE_NTFS        := true
+#TW_INCLUDE_NTFS_3G          := true
+TW_NO_EXFAT_FUSE             := true
 
 # Version
 PLATFORM_VERSION                := 99.87.36
@@ -139,7 +137,10 @@ TW_DEVICE_VERSION               := OnePlus 12
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
-
+BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
+BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA4096
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
+BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 
 # Other TWRP Configurations
 TARGET_RECOVERY_QCOM_RTC_FIX            := true
