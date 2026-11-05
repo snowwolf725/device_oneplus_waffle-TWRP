@@ -1,64 +1,30 @@
 #
-# Copyright 2017 The Android Open Source Project
+# Copyright (C) 2025 The Android Open Source Project
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# SPDX-License-Identifier: Apache-2.0
 #
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-#
-# Only the below variable(s) need to be changed!
-#
-# Identifier for common folder
-COMMON_SOC := sm86xx
 
-# Define hardware platform
-PRODUCT_PLATFORM := pineapple
+DEVICE_PATH := device/oneplus/waffle
 
-#
-#
-#
-# The below variables will be generated automatically
-#
-#
+# Inherit from device.mk configuration
+$(call inherit-product, $(DEVICE_PATH)/device.mk)
+
 # Release name (automatically taken from this file's suffix)
 PRODUCT_RELEASE_NAME := $(lastword $(subst /, ,$(lastword $(subst _, ,$(firstword $(subst ., ,$(MAKEFILE_LIST)))))))
 
 # Custom vendor used in build tree (automatically taken from this file's prefix)
 CUSTOM_VENDOR := $(lastword $(subst /, ,$(firstword $(subst _, ,$(firstword $(MAKEFILE_LIST))))))
 
-# Inherit from our custom product configuration
-$(call inherit-product, vendor/$(CUSTOM_VENDOR)/config/common.mk)
-
-# OEM Info (automatically taken from device tree path)
-BOARD_VENDOR := $(or $(word 2,$(subst /, ,$(firstword $(MAKEFILE_LIST)))),$(value 2))
-
-## Device identifier. This must come after all inclusions
-
+## Device identifier
 PRODUCT_DEVICE := $(PRODUCT_RELEASE_NAME)
 PRODUCT_NAME := $(CUSTOM_VENDOR)_$(PRODUCT_DEVICE)
-PRODUCT_MODEL := CPH2573
-PRODUCT_SYSTEM_NAME := $(PRODUCT_MODEL)
+PRODUCT_BRAND := $(CUSTOM_VENDOR)
 PRODUCT_SYSTEM_DEVICE := OP595DL1
-PRODUCT_BRAND := $(BOARD_VENDOR)
+PRODUCT_MODEL := CPH2573
 PRODUCT_MANUFACTURER := $(PRODUCT_BRAND)
 
-PRODUCT_BUILD_PROP_OVERRIDES += \
-    TARGET_DEVICE=$(PRODUCT_SYSTEM_DEVICE) \
-    TARGET_PRODUCT=$(PRODUCT_SYSTEM_NAME)
+# Assert
+TARGET_OTA_ASSERT_DEVICE := $(PRODUCT_RELEASE_NAME)
 
-# Common path for device trees
-COMMON_PATH := device/$(PRODUCT_BRAND)/$(COMMON_SOC)-common
-
-# Device path for OEM device tree
-DEVICE_PATH := device/$(PRODUCT_BRAND)/$(PRODUCT_DEVICE)
-
-# Inherit from hardware-specific part of the product configuration
-$(call inherit-product, $(DEVICE_PATH)/device-$(PRODUCT_DEVICE).mk)
+# Theme
+TW_STATUS_ICONS_ALIGN := center
