@@ -110,16 +110,16 @@ i#BOARD_RECOVERY_IMAGE_PREPARE += \
     chmod 0755 $(PRODUCT_OUT)/recovery/root/system/bin/unzip
 
 # TWRP display
-TW_BRIGHTNESS_PATH      := /sys/class/backlight/panel0-backlight/brightness
-TW_DEFAULT_BRIGHTNESS   := 2048
-TW_FRAMERATE            := 120
-TW_MAX_BRIGHTNESS       := 4095
-TW_SCREEN_BLANK_ON_BOOT := true
-TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_THEME := landscape_hdpi #portrait_hdpi
-TW_ROTATION := 0 
-RECOVERY_TOUCHSCREEN_SWAP_XY := true    
-RECOVERY_TOUCHSCREEN_FLIP_Y := true 
+TW_BRIGHTNESS_PATH            := "/sys/devices/platform/soc/ae00000.qcom,mdss_mdp/backlight/panel0-backlight/brightness"
+TW_DEFAULT_BRIGHTNESS         := 1000
+TW_FRAMERATE                  := 120
+TW_MAX_BRIGHTNESS             := 1500
+#TW_SCREEN_BLANK_ON_BOOT.     := true
+TW_INPUT_BLACKLIST.           := "hbtp_vm"
+TW_THEME                      := landscape_hdpi #portrait_hdpi
+#TW_ROTATION                  := 0 
+#RECOVERY_TOUCHSCREEN_SWAP_XY := true    
+#RECOVERY_TOUCHSCREEN_FLIP_Y  := true 
 
 # TWRP file system
 RECOVERY_SDCARD_ON_DATA     := true
@@ -135,7 +135,7 @@ PLATFORM_VERSION                := 99.87.36
 PLATFORM_VERSION_LAST_STABLE    := $(PLATFORM_VERSION)
 PLATFORM_SECURITY_PATCH         := 2099-12-31
 VENDOR_SECURITY_PATCH           := $(PLATFORM_SECURITY_PATCH)
-TW_DEVICE_VERSION               := Lenovo Xiaoxin Pad Pro GT
+TW_DEVICE_VERSION               := OnePlus 12
 
 # Verified Boot
 BOARD_AVB_ENABLE := true
@@ -143,11 +143,11 @@ BOARD_AVB_ENABLE := true
 
 # Other TWRP Configurations
 TARGET_RECOVERY_QCOM_RTC_FIX            := true
-TW_CUSTOM_CPU_TEMP_PATH                 := "/sys/class/thermal/thermal_zone48/temp"
+TW_CUSTOM_CPU_TEMP_PATH                 := "/sys/devices/virtual/thermal/thermal_zone45/temp"
 TW_EXCLUDE_APEX                         := true
 TW_EXCLUDE_DEFAULT_USB_INIT             := true
 TW_EXTRA_LANGUAGES                      := true
-TW_LOAD_VENDOR_MODULES                  := "adsp_loader_dlkm.ko goodix_core.ko stm_st54se_gpio.ko nxp-nci.ko"
+TW_LOAD_VENDOR_MODULES                  := "adsp_loader_dlkm.ko rproc_qcom_common.ko q6_dlkm.ko qcom_q6v5.ko qcom_q6v5_pas.ko qcom_esoc.ko qcom_sysmon.ko qcom-hv-haptics.ko goodix_ts.ko haptic_feedback.ko oplus_chg_v2.ko oplus_bsp_tp_custom.ko oplus_bsp_tp_common.ko oplus_bsp_tp_notify.ko oplus_bsp_tp_tcm_oncell.ko oplus_bsp_tp_tcm_S3910.ko oplus_bsp_tp_syna_comnon.ko oplus_bsp_synaptics_tcm2.ko oplus_bsp_tp_ilitek7807s.ko oplus_bsp_tp_td4377_noflash.ko oplus_bsp_tp_gt9966.ko oplus_bsp_tp_gt9916.ko oplus_bsp_kshrink_slabd.ko oplus_bsp_tp_nt36528_noflash.ko qbridge.ko"
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI      := true
 TW_NO_SCREEN_BLANK                      := true
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID  := true
