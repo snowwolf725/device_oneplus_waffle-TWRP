@@ -104,7 +104,7 @@ TW_USE_TOOLBOX                := true
 TW_INCLUDE_ZSTD               := true
 TW_USE_DMCTL                  := true
 
-i#BOARD_RECOVERY_IMAGE_PREPARE += \
+#BOARD_RECOVERY_IMAGE_PREPARE += \
     rm -f $(PRODUCT_OUT)/recovery/root/system/bin/unzip && \
     cp $(TARGET_DEVICE_DIR)/recovery/root/system/bin/unzip7aGaGaGaGaGaGza $(PRODUCT_OUT)/recovery/root/system/bin/unzip && \
     chmod 0755 $(PRODUCT_OUT)/recovery/root/system/bin/unzip
@@ -150,8 +150,8 @@ TW_CUSTOM_CPU_TEMP_PATH                 := "/sys/devices/virtual/thermal/thermal
 TW_EXCLUDE_APEX                         := true
 TW_EXCLUDE_DEFAULT_USB_INIT             := true
 TW_EXTRA_LANGUAGES                      := true
-TW_LOAD_VENDOR_MODULES                  := "adsp_loader_dlkm.ko rproc_qcom_common.ko q6_dlkm.ko qcom_q6v5.ko qcom_q6v5_pas.ko qcom_esoc.ko qcom_sysmon.ko qcom-hv-haptics.ko goodix_ts.ko haptic_feedback.ko oplus_chg_v2.ko oplus_bsp_tp_custom.ko oplus_bsp_tp_common.ko oplus_bsp_tp_notify.ko oplus_bsp_tp_tcm_oncell.ko oplus_bsp_tp_tcm_S3910.ko oplus_bsp_tp_syna_comnon.ko oplus_bsp_synaptics_tcm2.ko oplus_bsp_tp_ilitek7807s.ko oplus_bsp_tp_td4377_noflash.ko oplus_bsp_tp_gt9966.ko oplus_bsp_tp_gt9916.ko oplus_bsp_kshrink_slabd.ko oplus_bsp_tp_nt36528_noflash.ko qbridge.ko"
-TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI      := true
+#TW_LOAD_VENDOR_MODULES                  := "adsp_loader_dlkm.ko rproc_qcom_common.ko q6_dlkm.ko qcom_q6v5.ko qcom_q6v5_pas.ko qcom_esoc.ko qcom_sysmon.ko qcom-hv-haptics.ko goodix_ts.ko haptic_feedback.ko oplus_chg_v2.ko oplus_bsp_tp_custom.ko oplus_bsp_tp_common.ko oplus_bsp_tp_notify.ko oplus_bsp_tp_tcm_oncell.ko oplus_bsp_tp_tcm_S3910.ko oplus_bsp_tp_syna_comnon.ko oplus_bsp_synaptics_tcm2.ko oplus_bsp_tp_ilitek7807s.ko oplus_bsp_tp_td4377_noflash.ko oplus_bsp_tp_gt9966.ko oplus_bsp_tp_gt9916.ko oplus_bsp_kshrink_slabd.ko oplus_bsp_tp_nt36528_noflash.ko qbridge.ko"
+#TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI      := true
 TW_NO_SCREEN_BLANK                      := true
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID  := true
 
