@@ -29,7 +29,7 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # Kernel
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS   := false
-#PRODUCT_ENABLE_UFFD_GC                          := true
+PRODUCT_ENABLE_UFFD_GC                          := true
 
 # OTA certs
 PRODUCT_EXTRA_RECOVERY_KEYS += \
