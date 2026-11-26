@@ -4,25 +4,10 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# Configure base.mk
-$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
-
-# Configure core_64_bit_only.mk
-$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit_only.mk)
-
-# Configure virtual_ab compression.mk
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression_with_xor.mk)
-
-# Configure emulated_storage.mk
-$(call inherit-product, $(SRC_TARGET_DIR)/product/emulated_storage.mk)
-
-# Configure twrp common.mk
-$(call inherit-product, vendor/twrp/config/common.mk)
-
 # Shipping API level
-BOARD_SHIPPING_API_LEVEL    := 34
-PRODUCT_SHIPPING_API_LEVEL  := 34
-PRODUCT_TARGET_VNDK_VERSION := 34
+BOARD_SHIPPING_API_LEVEL    := 35
+PRODUCT_SHIPPING_API_LEVEL  := 35
+PRODUCT_TARGET_VNDK_VERSION := 35
 
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
@@ -91,13 +76,18 @@ PRODUCT_PACKAGES += \
     qcom_decrypt \
     qcom_decrypt_fbe
 
+# dynamic partition tools
+PRODUCT_PACKAGES += \
+    lpflash \
+    lpmake \
+    lpunpack
+
 #namespace definition for librecovery_updater
 #differentiate legacy 'sg' or 'bsg' framework
 SOONG_CONFIG_NAMESPACES += ufsbsg
 
 SOONG_CONFIG_ufsbsg += ufsframework
 SOONG_CONFIG_ufsbsg_ufsframework := bsg
-
 
 # System AVB
 BOARD_AVB_VBMETA_SYSTEM := system
