@@ -38,6 +38,9 @@ TW_FRAMERATE := 120
 # Fix Touchscreen issue
 TW_NO_SCREEN_BLANK := true
 
+# Fix refresh rate
+AERA_DRM_FIXED_REFRESH_RATE := 120
+
 # Use rm instead of the format
 TW_ALWAYS_RMRF := true
 
