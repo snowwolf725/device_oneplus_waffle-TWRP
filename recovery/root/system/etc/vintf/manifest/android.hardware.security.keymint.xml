@@ -1,0 +1,28 @@
+<!--
+    Recovery VINTF fragment for AIDL KeyMint.
+
+    Recovery-mode servicemanager only reads /system/etc/vintf (via
+    VintfObjectRecovery), not /vendor/etc/vintf. Without this fragment the
+    keymint HAL instance IKeyMintDevice/default cannot be registered, so
+    keystore2 fails and FBE metadata decryption of /data fails.
+-->
+<manifest version="1.0" type="device">
+    <hal format="aidl">
+        <name>android.hardware.security.keymint</name>
+        <version>3</version>
+        <fqname>IKeyMintDevice/default</fqname>
+    </hal>
+    <hal format="aidl">
+        <name>android.hardware.security.sharedsecret</name>
+        <fqname>ISharedSecret/default</fqname>
+    </hal>
+    <hal format="aidl">
+        <name>android.hardware.security.secureclock</name>
+        <fqname>ISecureClock/default</fqname>
+    </hal>
+    <hal format="aidl">
+        <name>android.hardware.security.keymint</name>
+        <version>3</version>
+        <fqname>IRemotelyProvisionedComponent/default</fqname>
+    </hal>
+</manifest>

@@ -1,0 +1,13 @@
+<!--
+    Recovery VINTF fragment for AIDL Gatekeeper.
+
+    Recovery-mode servicemanager only reads /system/etc/vintf. Without this
+    fragment the gatekeeper HAL instance IGatekeeper/default cannot register,
+    so synthetic-password decryption fails when a lock-screen credential is set.
+-->
+<manifest version="1.0" type="device">
+    <hal format="aidl">
+        <name>android.hardware.gatekeeper</name>
+        <fqname>IGatekeeper/default</fqname>
+    </hal>
+</manifest>

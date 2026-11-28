@@ -5,5 +5,3 @@
 #
 
 PRODUCT_MAKEFILES := $(LOCAL_DIR)/twrp_waffle.mk
-
-COMMON_LUNCH_CHOICES := twrp_waffle-eng
